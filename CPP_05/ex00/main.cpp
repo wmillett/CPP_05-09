@@ -4,7 +4,7 @@
 int main(){
 
 
-  std::cout << "Errors testing" << std::endl;
+  std::cout << "-------------- Testing for errors ------------" << std::endl;
 	{
 		try {
 			Bureaucrat tooHigh("Too High", 0);
@@ -42,7 +42,7 @@ int main(){
 		}
 	}
 
-
+    std::cout << "---- End of error testing ----" << std::endl;
 
 
 
