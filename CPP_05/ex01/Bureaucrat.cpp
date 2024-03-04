@@ -62,6 +62,15 @@ const char* Bureaucrat::GradeTooHighException::what() const throw(){
      return("Grade too high");
 };
 
+void Bureaucrat::toSign(Form a){
+    if (a.getSigned){
+        std::cout << this->_name << "couldn't sign " << a.getName() << " because it was already signed." << std::endl;
+        return ;
+    }
+    if (a.beSigned(*this))
+};
+
+
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& other)
 {
 	os << other.getName() << ", bureaucrat grade " << other.getGrade();

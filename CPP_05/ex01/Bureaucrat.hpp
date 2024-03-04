@@ -4,6 +4,7 @@
 
 # include <iostream>
 # include <stdexcept>
+# include "Form.hpp"
 
 
 class Bureaucrat{
@@ -28,6 +29,7 @@ class Bureaucrat{
         
         const std::string getName(void) const;
         int getGrade(void) const;
+        void signForm(Form toSign);
         void checkGrade(int grade);
         void increaseGrade(unsigned int amount);
         void decreaseGrade(unsigned int amount);
