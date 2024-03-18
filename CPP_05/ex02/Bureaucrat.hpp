@@ -3,9 +3,9 @@
 
 # include <iostream>
 # include <stdexcept>
-# include "Form.hpp"
+# include "AForm.hpp"
 
-class Form;
+class AForm;
 
 class Bureaucrat{
     private:
@@ -29,7 +29,7 @@ class Bureaucrat{
         
         const std::string getName(void) const;
         int getGrade(void) const;
-        void signForm(Form *toSign);
+        void signAForm(AForm *toSign);
         void checkGrade(int grade);
         void increaseGrade(unsigned int amount);
         void decreaseGrade(unsigned int amount);

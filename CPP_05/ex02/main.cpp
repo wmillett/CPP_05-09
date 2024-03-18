@@ -1,4 +1,4 @@
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
 int main(){
 
@@ -58,7 +58,7 @@ int main(){
 	std::cout << "--------- End of Bureaucrat testing ------------" << std::endl;
 	{
 		try {
-			Form tooHigh("Too High", 0, 0);
+			AForm tooHigh("Too High", 0, 0);
 		} 
 		catch (std::exception & e) {
 			std::cout << "Error " << e.what() << std::endl;
@@ -66,7 +66,7 @@ int main(){
 	}
 	{
 		try {
-			Form tooLow("Too low", 151, 151);
+			AForm tooLow("Too low", 151, 151);
 		} 
 		catch (std::exception & e) {
 			std::cout << "Error " << e.what() << std::endl;
@@ -74,18 +74,18 @@ int main(){
 	}
 	{
 		std::cout << "cannot sign test" << std::endl;
-		Form soeasy("easy form", 149, 149);
+		AForm soeasy("easy AForm", 149, 149);
 		Bureaucrat useless("Useless", 150);
 		try {
-			useless.signForm(&soeasy);
+			useless.signAForm(&soeasy);
 		} 
 		catch (std::exception & e) {
 			std::cout << "Error " << e.what() << std::endl;
 		}
 		std::cout << "Useless bureaucrat decides to better his skills." << std::endl;
 		useless.increaseGrade(149);
-		Form sohard("hard form", 1, 1);
-		useless.signForm(&sohard);
+		AForm sohard("hard AForm", 1, 1);
+		useless.signAForm(&sohard);
 	}
 	
 	std::cout << "------- End of tests ----------" << std::endl;

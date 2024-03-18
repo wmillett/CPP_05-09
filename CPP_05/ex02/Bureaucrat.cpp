@@ -62,7 +62,7 @@ const char* Bureaucrat::GradeTooHighException::what() const throw(){
      return("Grade too high");
 };
 
-void Bureaucrat::signForm(Form *a){
+void Bureaucrat::signAForm(AForm *a){
     if (a->getSigned()){
         std::cout << this->_name << " couldn't sign " << a->getName() << " because it was already signed." << std::endl;
         return ;

@@ -5,16 +5,13 @@ RESET_COLOR = '\033[0;0m'
 
 # Compiler
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror 
 
 # Executable
 NAME = Form
 
 # Source files
 SRC = $(wildcard *.cpp)
-
-
-
 
 # Object files
 OBJS = $(SRC:%.cpp=%.o)
