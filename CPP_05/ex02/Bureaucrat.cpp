@@ -80,6 +80,20 @@ void Bureaucrat::signAForm(AForm *a){
     }
 };
 
+bool Bureaucrat::executeForm(AForm const & form){
+
+    try{
+    form.execute(*this);
+
+    }
+    catch(std::exception & e){
+        std::cout << this->_name << " couldn't execute " << form.getName() << " because their grade was too low." << std::endl;
+        return 0;
+    }
+    std::cout << this->_name << " executed " << form.getName() << std::endl;
+    return 1;
+};
+
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& other)
 {

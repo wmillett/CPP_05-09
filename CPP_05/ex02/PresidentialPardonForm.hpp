@@ -3,6 +3,7 @@
 
 # include "AForm.hpp"
 
+class AForm;
 
 class PresidentialPardonForm: public AForm{
     private:
@@ -14,7 +15,10 @@ class PresidentialPardonForm: public AForm{
         ~PresidentialPardonForm(void);
         PresidentialPardonForm(const PresidentialPardonForm& other);
         PresidentialPardonForm& operator=(const PresidentialPardonForm& other);
+        
         std::string getTarget(void) const;
+
+        bool execute(Bureaucrat const & executor) const;
 };
 
 

@@ -27,13 +27,17 @@ class Bureaucrat{
                 virtual const char* what() const throw();
         };
         
+
+
         const std::string getName(void) const;
         int getGrade(void) const;
         void signAForm(AForm *toSign);
         void checkGrade(int grade);
         void increaseGrade(unsigned int amount);
         void decreaseGrade(unsigned int amount);
-};
+
+        bool executeForm(AForm const & form);
+}; 
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& other);
 

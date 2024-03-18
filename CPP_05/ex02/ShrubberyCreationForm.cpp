@@ -7,7 +7,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(void): AForm("ShrubberyCreationForm
 };
 
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string target):  AForm("ShrubberyCreationForm", 145, 137), _target("Default"){
+ShrubberyCreationForm::ShrubberyCreationForm(std::string target):  AForm("ShrubberyCreationForm", 145, 137), _target(target){
     std::cout << "ShrubberyCreationForm parameter constructor called." << std::endl;
 };
 
@@ -29,4 +29,25 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationF
 
 std::string ShrubberyCreationForm::getTarget(void) const{
     return _target;
+};
+
+bool ShrubberyCreationForm::execute(Bureaucrat const & executor) const{
+  
+    if(!AForm::execute(executor))
+        return 0;
+    else{
+        std::ofstream outputFile;
+    outputFile.open(_target + "_shrubbery");
+
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening file!" << std::endl;
+        return 0;//throw
+    }
+
+    
+    outputFile << " _-_|   ||_ _||_|_||_|" << std::endl;
+
+    outputFile.close();
+    return 1;
+    }
 };

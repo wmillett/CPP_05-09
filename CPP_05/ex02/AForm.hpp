@@ -30,7 +30,7 @@ class AForm{
                 virtual const char* what() const throw();
         };
        
-        virtual void makeAbstract(void) const = 0;
+        virtual bool execute(Bureaucrat const & executor) const = 0;
         
         std::string getName(void) const;
         int getToSign(void) const;

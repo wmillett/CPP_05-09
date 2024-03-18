@@ -1,33 +1,46 @@
-#include "RobotomyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
 
 
-
-RobotomyCreationForm::RobotomyCreationForm(void): _target("Default"){
-  std::cout << "RobotomyCreationForm default constructor called." << std::endl;
+RobotomyRequestForm::RobotomyRequestForm(void): AForm("RobotomyRequestForm", 72, 45), _target("Default"){
+  std::cout << "RobotomyRequestForm default constructor called." << std::endl;
 };
 
-
-RobotomyCreationForm::RobotomyCreationForm(std::string target): _target(target){
-    std::cout << "RobotomyCreationForm parameter constructor called." << std::endl;
+RobotomyRequestForm::RobotomyRequestForm(std::string target): AForm("RobotomyRequestForm", 72, 45),_target(target){
+    std::cout << "RobotomyRequestForm parameter constructor called." << std::endl;
 };
 
-RobotomyCreationForm::~RobotomyCreationForm(void){
-    std::cout << "RobotomyCreationForm destructor called." << std::endl;
+RobotomyRequestForm::~RobotomyRequestForm(void){
+    std::cout << "RobotomyRequestForm destructor called." << std::endl;
 };
 
-RobotomyCreationForm::RobotomyCreationForm(const RobotomyCreationForm& other){
-    std::cout << "Copy constructor RobotomyCreationForm called" << std::endl;
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other){
+    std::cout << "Copy constructor RobotomyRequestForm called" << std::endl;
     *this = other;
 };
 
-RobotomyCreationForm& RobotomyCreationForm::operator=(const RobotomyCreationForm& other){
+RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other){
     if (this != &other){
         this->_target = other._target;
     }
     return *this;
 };
 
-
-std::string RobotomyCreationForm::getTarget(void) const{
+std::string RobotomyRequestForm::getTarget(void) const{
     return _target;
+};
+
+bool RobotomyRequestForm::execute(Bureaucrat const & executor) const{
+  
+    if(!AForm::execute(executor))
+        return 0;
+    else{
+        std::cout << "* Drilling noises *" << std::endl;
+        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+        int randomNumber = std::rand() % 2;
+        if(randomNumber)
+            std::cout << _target << " has been robotomized." << std::endl;
+        else
+            std::cout << _target << "has failed to be robotomized." << std::endl;
+        return 1;
+    }
 };
