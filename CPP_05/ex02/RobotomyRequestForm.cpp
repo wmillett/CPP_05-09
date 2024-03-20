@@ -30,9 +30,10 @@ std::string RobotomyRequestForm::getTarget(void) const{
 };
 
 bool RobotomyRequestForm::execute(Bureaucrat const & executor) const{
-  
-    if(!AForm::execute(executor))
-        return 0;
+
+    if(executor.getGrade() > this->getToExec()){
+        throw(GradeTooLowException());
+    }
     else{
         std::cout << "* Drilling noises *" << std::endl;
         std::srand(static_cast<unsigned int>(std::time(nullptr)));
@@ -40,7 +41,7 @@ bool RobotomyRequestForm::execute(Bureaucrat const & executor) const{
         if(randomNumber)
             std::cout << _target << " has been robotomized." << std::endl;
         else
-            std::cout << _target << "has failed to be robotomized." << std::endl;
+            std::cout << _target << " has failed to be robotomized." << std::endl;
         return 1;
     }
 };

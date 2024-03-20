@@ -29,7 +29,10 @@ class AForm{
             public:
                 virtual const char* what() const throw();
         };
-       
+        class HasNotBeenSigned: public std::exception{
+            public:
+                virtual const char* what() const throw();
+        };
         virtual bool execute(Bureaucrat const & executor) const = 0;
         
         std::string getName(void) const;

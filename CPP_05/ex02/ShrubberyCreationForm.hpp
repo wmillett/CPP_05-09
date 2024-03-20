@@ -21,12 +21,4 @@ class ShrubberyCreationForm: public AForm{
         bool execute(Bureaucrat const & executor) const;
 };
 
-
-
-
-
-
-
-
-
 #endif

@@ -33,8 +33,9 @@ std::string ShrubberyCreationForm::getTarget(void) const{
 
 bool ShrubberyCreationForm::execute(Bureaucrat const & executor) const{
   
-    if(!AForm::execute(executor))
-        return 0;
+    if(executor.getGrade() > this->getToExec()){
+        throw(GradeTooLowException());
+    }
     else{
         std::ofstream outputFile;
     outputFile.open(_target + "_shrubbery");
@@ -43,11 +44,14 @@ bool ShrubberyCreationForm::execute(Bureaucrat const & executor) const{
         std::cerr << "Error opening file!" << std::endl;
         return 0;//throw
     }
-
-    
     outputFile << " _-_|   ||_ _||_|_||_|" << std::endl;
 
     outputFile.close();
     return 1;
     }
 };
+    //  else if(!this->getSigned()){
+    //     throw(HasNotBeenSigned());
+    //     // std::cout << "Form for " << _target << " has not been signed." << std::endl;
+    //     // return 0;
+    // }

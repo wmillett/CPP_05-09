@@ -82,9 +82,12 @@ void Bureaucrat::signAForm(AForm *a){
 
 bool Bureaucrat::executeForm(AForm const & form){
 
+    if(!form.getSigned()){
+         std::cout << this->_name << " couldn't execute " << form.getName() << " because the form has not been signed." << std::endl;
+        return 0;
+    }
     try{
     form.execute(*this);
-
     }
     catch(std::exception & e){
         std::cout << this->_name << " couldn't execute " << form.getName() << " because their grade was too low." << std::endl;
