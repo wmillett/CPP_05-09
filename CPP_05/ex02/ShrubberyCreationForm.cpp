@@ -44,7 +44,12 @@ bool ShrubberyCreationForm::execute(Bureaucrat const & executor) const{
         std::cerr << "Error opening file!" << std::endl;
         return 0;//throw
     }
-    outputFile << " _-_|   ||_ _||_|_||_|" << std::endl;
+    outputFile << "     /\\\n"
+              "    //\\\\\n"
+              "   //  \\\\\n"
+              "  //    \\\\\n"
+              " //______\\\\\n"
+              "     ||" << std::endl;
 
     outputFile.close();
     return 1;
