@@ -21,6 +21,7 @@ int main(){
 	
 	bob.signAForm(rrf);
 	bob.executeForm(*rrf);
+	delete rrf;
 	// std::cout << "--------- End of Bureaucrat testing ------------" << std::endl;
 	// Bureaucrat a("Useless", 150);
 	// Bureaucrat b("President", 1);
