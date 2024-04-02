@@ -1,14 +1,14 @@
 #include "Scalar.hpp"
 
 
-static bool containsSpace(std::string a){
-    const size_t size = a.size();
-    for(size_t i = 0; i < size; i++){
-        if(isspace(a[i]))
-            return 1;
-    }
-    return 0;
-}
+// static bool containsSpace(std::string a){
+//     const size_t size = a.size();
+//     for(size_t i = 0; i < size; i++){
+//         if(isspace(a[i]))
+//             return 1;
+//     }
+//     return 0;
+// }
 
 void Scalar::printScalar(void){
     if(!strcmp(scalarChar.c_str(), IMP.c_str()) || !strcmp(scalarChar.c_str(), NDISP.c_str()))
@@ -16,7 +16,7 @@ void Scalar::printScalar(void){
     else
         std::cout << "Char: '" << scalarChar << "'" << std::endl;
     std::cout << "Int: " << scalarInt << std::endl;
-    std::cout << "Float: " << scalarFloat << std::endl;
+    std::cout << "Float: " << scalarFloat << "f" << std::endl;
     std::cout << "Double: " << scalarDouble << std::endl;
 };
 
@@ -56,6 +56,12 @@ void Scalar::convertToChar(int a){
     scalarChar = charToString(static_cast<char>(a));
 };
 
+// std::string Scalar::convertIntToFloat(int a){
+//     std::string tmp = intToString(a);
+//     tmp.push_back('f');
+//     return tmp;
+// };
+
 bool Scalar::checkPseudo(std::string a){
     if(!strcmp(a.c_str(), "nan") || !strcmp(a.c_str(), "nanf")){
         scalarFloat = "nanf";
@@ -84,27 +90,36 @@ void Scalar::isChar(std::string a){
         if(!isdigit(a[0])){
             scalarChar = a;
             scalarInt = intToString(static_cast<int>(a[0]));
+            scalarFloat = intToString(static_cast<int>(a[0]));
+            scalarDouble = doubleToString(static_cast<double>(a[0]));
         }
         else{
-            scalarChar = charToString(static_cast<char>(a[0]));
-            scalarInt = intToString(a[0]);
+            scalarChar = NDISP;
+            scalarInt = intToString(a[0] - 48);
+            scalarFloat = intToString(static_cast<int>(a[0] - 48));
+            scalarDouble = doubleToString(static_cast<double>(a[0] - 48));
         }
     }
     else{
         scalarChar = NDISP;
         scalarInt = intToString(static_cast<int>(a[0]));
+        scalarFloat = intToString(static_cast<int>(a[0]));
+        scalarDouble = doubleToString(static_cast<double>(a[0]));
     }
-    scalarFloat = floatToString(static_cast<float>(a[0]));
-    scalarFloat = doubleToString(static_cast<double>(a[0]));
     printScalar();
 };
 
 bool Scalar::checkInt(std::string a){
     for(size_t i = 0; a[i]; i++){
-        if(!isdigit(a[i]))
+        if(a[i] == '-'){
+            if(i != 0)
+                return 0;
+        }
+        else if(!isdigit(a[i]))
             return 0;
     }
     int res = std::stoi(a);
+    scalarInt = intToString(res);
     convertToChar(res);
     scalarFloat = floatToString(static_cast<float>(res));
     scalarDouble = doubleToString(static_cast<double>(res));
@@ -112,42 +127,89 @@ bool Scalar::checkInt(std::string a){
     return 1;
 };
 
-
-bool Scalar::checkDataType(std::string a){
+bool Scalar::checkOther(std::string a){
+    bool tmp = 0;
     const size_t size = a.size();
-    size_t count = 0;
-    long check = std::strtol(a.c_str(), NULL, 10);
+    for(size_t i = 0; i < size; i++){
+        if(a[i] == '-'){
+            if(i != 0)
+                return 0;
+        }
+        if(a[i] == '.'){
+            if(tmp || i == 0 || i + 1 == size){
+                return 0;
+            }
+            tmp = 1;
+        }
+        else if(!isdigit(a[i])){
+            if(i + 1 == size && a[i] == 'f'){
+                dataType = finteger;
+                return 1;
+            }
+            return 0;
+        }
+    }
+    dataType = dinteger;
+    return 1;
+};
+
+bool Scalar::checkDataType(){
+    const size_t size = input.size();
+    long check = std::strtol(input.c_str(), NULL, 10);
     if (check < INT_MIN || check > INT_MAX)
         return(printScalar(), 0);
     if(size == 1){
-        isChar(a);
+        isChar(input);
         return 0;
     }
-    else if(checkPseudo(a)){
+    else if(checkPseudo(input)){
         return 0;
     }
-    else if(checkInt(a)){
+    else if(checkInt(input)){
         return 0;
     }
-    
-
+    else if(checkOther(input)){
+        if(dataType == finteger){
+            float res = std::stof(input);
+            scalarFloat = floatToString(res);
+            scalarDouble = doubleToString(static_cast<double>(res));
+            convertToChar(static_cast<int>(res));
+            scalarInt = intToString(static_cast<int>(res));
+            printScalar();
+            return 0;
+        }
+        else{
+            double res = std::stod(input);
+            scalarDouble = doubleToString(res);
+            scalarFloat = floatToString(static_cast<float>(res));
+            convertToChar(static_cast<int>(res));
+            scalarInt = intToString(static_cast<int>(res));
+            printScalar();
+            return 0;
+        }
+    }
+    else{
+        printScalar();
+        return 1;
+    }
 };
 
 
-Scalar::Scalar(): scalarChar(IMP), scalarInt(IMP), scalarDouble(IMP), scalarFloat(IMP), input("none"){
+Scalar::Scalar(): scalarChar(IMP), scalarInt(IMP), scalarDouble(IMP), scalarFloat(IMP), input("none"), dataType(none){
 };
 
-Scalar::Scalar(std::string a): scalarChar(IMP), scalarInt(IMP), scalarDouble(IMP), scalarFloat(IMP), input(a){
+Scalar::Scalar(std::string a): scalarChar(IMP), scalarInt(IMP), scalarDouble(IMP), scalarFloat(IMP), input(a), dataType(none){
+    checkDataType();
 };
 
 Scalar::Scalar(Scalar& other): input(other.input){};
 
- Scalar& operator=(const Scalar& other){
+Scalar& Scalar::operator=(const Scalar& other){
     if(this != &other){
         input = other.input;
     }
     return *this;
- };
+};
 
 Scalar::~Scalar(){
 };
