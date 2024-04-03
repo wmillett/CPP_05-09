@@ -8,7 +8,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Executable
-NAME = convert
+NAME = Identify
 
 # Source files
 SRC = $(wildcard *.cpp)
@@ -34,6 +34,6 @@ fclean: clean
 re: fclean all
 
 run: all
-	./$(NAME) "a"
+	./$(NAME)
 
 .PHONY: all clean fclean re
