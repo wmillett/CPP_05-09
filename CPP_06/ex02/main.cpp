@@ -65,8 +65,8 @@ void identify(Base& p){
 }
 
 int main(){
-     std::srand(std::time(0));
-      for (int i = 0; i < 10; i++){
+    std::srand(std::time(0));
+    for (size_t i = 0; i < 10; i++){
         Base *base = generate();
         identify(base);
         identify(*base);
