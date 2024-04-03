@@ -9,15 +9,33 @@
 //     }
 //     return 0;
 // }
+static bool containsDot(std::string a){
+    const size_t size = a.size();
+    for(size_t i = 0; i < size; i++){
+        if(a[i] == '.')
+            return 1;
+    }
+    return 0;
+};
 
 void Scalar::printScalar(void){
-    if(!strcmp(scalarChar.c_str(), IMP.c_str()) || !strcmp(scalarChar.c_str(), NDISP.c_str()))
+    if(scalarChar == IMP || scalarChar == NDISP)
         std::cout << "Char: " << scalarChar << std::endl;
     else
         std::cout << "Char: '" << scalarChar << "'" << std::endl;
     std::cout << "Int: " << scalarInt << std::endl;
-    std::cout << "Float: " << scalarFloat << "f" << std::endl;
-    std::cout << "Double: " << scalarDouble << std::endl;
+    if(scalarFloat == IMP){
+        std::cout << "Float: " << scalarFloat << std::endl;
+        std::cout << "Double: " << scalarDouble << std::endl;
+    }
+    else if(containsDot(scalarFloat) || dontAddDecimal){
+        std::cout << "Float: " << scalarFloat << "f" << std::endl;
+        std::cout << "Double: " << scalarDouble << std::endl;
+    }
+    else{
+        std::cout << "Float: " << scalarFloat << ".0f" << std::endl;
+        std::cout << "Double: " << scalarDouble << ".0" << std::endl;
+    }
 };
 
 static std::string intToString(int number) {
@@ -66,18 +84,21 @@ bool Scalar::checkPseudo(std::string a){
     if(!strcmp(a.c_str(), "nan") || !strcmp(a.c_str(), "nanf")){
         scalarFloat = "nanf";
         scalarDouble = "nan";
+        dontAddDecimal = 1;
         printScalar();
         return 1;
     }
     if(!strcmp(a.c_str(), "-inff") || !strcmp(a.c_str(), "-inf")){
         scalarFloat = "-inff";
         scalarDouble = "-inf";
+        dontAddDecimal = 1;
         printScalar();
         return 1;
     }
     if(!strcmp(a.c_str(), "+inff") || !strcmp(a.c_str(), "+inf")){
         scalarFloat = "+inff";
         scalarDouble = "+inf";
+        dontAddDecimal = 1;
         printScalar();
         return 1;
     }
@@ -180,6 +201,7 @@ bool Scalar::checkDataType(){
         }
         else{
             double res = std::stod(input);
+            std::cout << res << std::endl;
             scalarDouble = doubleToString(res);
             scalarFloat = floatToString(static_cast<float>(res));
             convertToChar(static_cast<int>(res));
@@ -194,11 +216,10 @@ bool Scalar::checkDataType(){
     }
 };
 
-
-Scalar::Scalar(): scalarChar(IMP), scalarInt(IMP), scalarDouble(IMP), scalarFloat(IMP), input("none"), dataType(none){
+Scalar::Scalar(): scalarChar(IMP), scalarInt(IMP), scalarDouble(IMP), scalarFloat(IMP), input("none"), dataType(none), dontAddDecimal(0){
 };
 
-Scalar::Scalar(std::string a): scalarChar(IMP), scalarInt(IMP), scalarDouble(IMP), scalarFloat(IMP), input(a), dataType(none){
+Scalar::Scalar(std::string a): scalarChar(IMP), scalarInt(IMP), scalarDouble(IMP), scalarFloat(IMP), input(a), dataType(none), dontAddDecimal(0){
     checkDataType();
 };
 

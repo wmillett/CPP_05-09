@@ -33,6 +33,7 @@ class Scalar{
         
         std::string input;
         e_DataType dataType;
+        bool dontAddDecimal;
 
         bool checkPseudo(std::string a);
         void convertToChar(int a);
