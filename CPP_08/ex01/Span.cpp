@@ -1,47 +1,39 @@
 #include "Span.hpp"
 
-// Constructor implementation
-Span::Span(unsigned int N) : max_capacity(N) {}
+Span::Span(unsigned int N) : _maxCapacity(N) {}
 
-// Copy constructor implementation
-Span::Span(const Span& other) : numbers(other.numbers), max_capacity(other.max_capacity) {}
+Span::Span(const Span& other) : _numbersList(other._numbersList), _maxCapacity(other._maxCapacity) {}
 
-// Copy assignment operator implementation
 Span& Span::operator=(const Span& other) {
     if (this != &other) {
-        numbers = other.numbers;
-        max_capacity = other.max_capacity;
+        _numbersList = other._numbersList;
+        _maxCapacity = other._maxCapacity;
     }
     return *this;
 }
 
-// Destructor implementation
 Span::~Span() {
-    // Any necessary cleanup can be performed here
 }
 
-// Method to add a single number to the Span
 void Span::addNumber(int num) {
-    if (numbers.size() >= max_capacity) {
-        throw std::overflow_error("Span is full, cannot add more numbers.");
+    if (_numbersList.size() >= _maxCapacity) {
+        throw std::overflow_error("Span is full, cannot add more _numbersList.");
     }
-    numbers.push_back(num);
+    _numbersList.push_back(num);
 }
 
-// Explicit instantiation for std::__1::__wrap_iter<int*>
-template void Span::addNumbers<std::__1::__wrap_iter<int*> >(std::__1::__wrap_iter<int*>, std::__1::__wrap_iter<int*>);
+// template void Span::add_numbersList<std::__1::__wrap_iter<int*> >(std::__1::__wrap_iter<int*>, std::__1::__wrap_iter<int*>);
 
-// Method to find the shortest span
 int Span::shortestSpan() const {
-    if (numbers.size() < 2) {
-        throw std::runtime_error("Cannot find span with less than 2 numbers.");
+    if (_numbersList.size() < 2) {
+        throw std::runtime_error("Cannot find span with less than 2 _numbersList.");
     }
-    std::vector<int> sortedNumbers = numbers;
-    std::sort(sortedNumbers.begin(), sortedNumbers.end());
+    std::vector<int> sorted_numbersList = _numbersList;
+    std::sort(sorted_numbersList.begin(), sorted_numbersList.end());
 
-    int shortest = sortedNumbers[1] - sortedNumbers[0];
-    for (size_t i = 2; i < sortedNumbers.size(); ++i) {
-        int span = sortedNumbers[i] - sortedNumbers[i - 1];
+    int shortest = sorted_numbersList[1] - sorted_numbersList[0];
+    for (size_t i = 2; i < sorted_numbersList.size(); ++i) {
+        int span = sorted_numbersList[i] - sorted_numbersList[i - 1];
         if (span < shortest) {
             shortest = span;
         }
@@ -51,10 +43,21 @@ int Span::shortestSpan() const {
 
 // Method to find the longest span
 int Span::longestSpan() const {
-    if (numbers.size() < 2) {
-        throw std::runtime_error("Cannot find span with less than 2 numbers.");
+    if (_numbersList.size() < 2) {
+        throw std::runtime_error("Cannot find span with less than 2 _numbersList.");
     }
-    int min = *std::min_element(numbers.begin(), numbers.end());
-    int max = *std::max_element(numbers.begin(), numbers.end());
+    int min = *std::min_element(_numbersList.begin(), _numbersList.end());
+    int max = *std::max_element(_numbersList.begin(), _numbersList.end());
     return max - min;
 }
+
+void Span::makeVector(int nb){
+  int max = getMax() - this->_numbersList.size();
+  for (int i = 0; i < max; i++) {
+    addNumber(nb + i);
+  }
+}
+
+ unsigned int Span::getMax() const{
+    return _maxCapacity;
+ }

@@ -8,8 +8,8 @@
 // class Span {
 // private:
 //     Span();
-//     std::vector<int> numbers;
-//     unsigned int max_capacity;
+//     std::vector<int> _numbersList;
+//     unsigned int _maxCapacity;
 
 // public:
 //     Span(unsigned int N);
@@ -17,9 +17,9 @@
 //     Span& operator=(const Span& other);
 //     ~Span();
 //     void addNumber(int num);
-//     void addNumbers(const std::vector<int>& nums);
+//     void add_numbersList(const std::vector<int>& nums);
 //     template <typename InputIterator>
-//     void addNumbers(InputIterator begin, InputIterator end);
+//     void add_numbersList(InputIterator begin, InputIterator end);
 //     int shortestSpan() const;
 //     int longestSpan() const;
 // };
@@ -34,29 +34,29 @@
 
 class Span {
 private:
-    std::vector<int> numbers;
-    unsigned int max_capacity;
+    std::vector<int> _numbersList;
+    unsigned int _maxCapacity;
     Span();
 public:
     Span(unsigned int N);
     Span(const Span& other);
     Span& operator=(const Span& other);
-    ~Span(); // Destructor declaration
+    ~Span();
     void addNumber(int num);
-    template <typename InputIterator>
-    void addNumbers(InputIterator begin, InputIterator end);
+    void makeVector(int nb);
+    // template <typename InputIterator>
+    // void add_numbersList(InputIterator begin, InputIterator end);
+    unsigned int getMax() const;
     int shortestSpan() const;
     int longestSpan() const;
 };
 
+// template <typename InputIterator>
+// void Span::add_numbersList(InputIterator begin, InputIterator end) {
+//     while (begin != end) {
+//         addNumber(*begin);
+//         ++begin;
+//     }
+// }
 
-// Definition of addNumbers function template
-template <typename InputIterator>
-void Span::addNumbers(InputIterator begin, InputIterator end) {
-    while (begin != end) {
-        addNumber(*begin);
-        ++begin;
-    }
-}
-
-#endif // SPAN_HPP
+#endif
