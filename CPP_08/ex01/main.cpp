@@ -43,7 +43,8 @@ int main() {
         sp.addNumber(11);
         std::cout << sp.shortestSpan() << std::endl;
         std::cout << sp.longestSpan() << std::endl;
-
+        std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
+        std::cout << "Longest span: " << sp.longestSpan() << std::endl;
         //Test with multiple numbers in same call
         std::cout << "Test with one call" << std::endl;
         sp.makeVector(10000);

@@ -52,7 +52,7 @@ int Span::longestSpan() const {
 }
 
 void Span::makeVector(int nb){
-  int max = getMax() - this->_numbersList.size();
+  int max = getMax() - _numbersList.size();
   for (int i = 0; i < max; i++) {
     addNumber(nb + i);
   }
