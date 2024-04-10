@@ -8,10 +8,10 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Executable
-NAME = span
+NAME = mutantstack
 
 # Source files
-SRC = $(wildcard *.cpp)
+SRC = $(wildcard *.cpp) 
 
 
 # Object files

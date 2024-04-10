@@ -47,6 +47,7 @@ public:
     // template <typename InputIterator>
     // void add_numbersList(InputIterator begin, InputIterator end);
     unsigned int getMax() const;
+    std::vector<int> getNumbers() const;
     int shortestSpan() const;
     int longestSpan() const;
 };

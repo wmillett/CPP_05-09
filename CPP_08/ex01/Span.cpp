@@ -22,8 +22,6 @@ void Span::addNumber(int num) {
     _numbersList.push_back(num);
 }
 
-// template void Span::add_numbersList<std::__1::__wrap_iter<int*> >(std::__1::__wrap_iter<int*>, std::__1::__wrap_iter<int*>);
-
 int Span::shortestSpan() const {
     if (_numbersList.size() < 2) {
         throw std::runtime_error("Cannot find span with less than 2 _numbersList.");
@@ -38,17 +36,16 @@ int Span::shortestSpan() const {
             shortest = span;
         }
     }
-    return shortest;
+    return std::abs(shortest);
 }
 
-// Method to find the longest span
 int Span::longestSpan() const {
     if (_numbersList.size() < 2) {
         throw std::runtime_error("Cannot find span with less than 2 _numbersList.");
     }
     int min = *std::min_element(_numbersList.begin(), _numbersList.end());
     int max = *std::max_element(_numbersList.begin(), _numbersList.end());
-    return max - min;
+    return std::abs(max - min);
 }
 
 void Span::makeVector(int nb){
@@ -58,6 +55,10 @@ void Span::makeVector(int nb){
   }
 }
 
- unsigned int Span::getMax() const{
+unsigned int Span::getMax() const{
     return _maxCapacity;
- }
+}
+
+std::vector<int> Span::getNumbers() const{
+    return _numbersList;
+}
