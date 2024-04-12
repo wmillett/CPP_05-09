@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv){
     if (argc != 2) {
-        std::cerr << "Usage: " << argv[0] << " <filename> <s1> <s2>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
         return 1;
     }
     std::string filename(argv[1]);
@@ -14,18 +14,10 @@ int main(int argc, char **argv){
     try{
         Bitcoin btc(filename);
         btc.convert();
-
     }
     catch(const std::exception& e){
-
+        std::cerr << "Caught exception: " << e.what() << std::endl;
         return 1;
     }
-    
-
-
-
-
-
-
     return 0;
 }

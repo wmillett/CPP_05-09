@@ -5,6 +5,7 @@
 # include <fstream>
 # include <string>
 # include <map>
+# include <stdexcept>
 
 # define DATA "data.csv"
 
@@ -19,6 +20,11 @@ class Bitcoin{
 
         const std::string getFileName(void) const;
         // const std::ifstream getData(void) const;
+
+        // class customException : public std::exception {
+	    // public:
+		//     const char* what() const throw();
+	    // };
     private:
         
         std::ifstream _data;

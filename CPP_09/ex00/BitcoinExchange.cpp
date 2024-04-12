@@ -2,7 +2,7 @@
 
 
 
-
+//TODO: change throw to print, get rid of extra 00000 before dates, fix converted value
 
 
 void Bitcoin::convert(){
@@ -21,9 +21,10 @@ void Bitcoin::convert(){
 
     std::getline(_input, line);
     if(line != "date | value"){
-        throw std::runtime_error("No header in file");
+        std::cout << "Invalid input format" << std::endl;
     }
     while(std::getline(_input, line)){
+        while(1){
 
             while(isspace(line[i]))
                 i++;
@@ -33,10 +34,13 @@ void Bitcoin::convert(){
             }
             check = atol(year.c_str());
             if(check < 2009 || check > 2022){
-                throw std::runtime_error("Year range is invalid");
+                std::cout << "Error: Year range is invalid" << std::endl;
+                break;
             }
-            if(line[i] != '-')
-                throw std::runtime_error("Invalid date format");
+            if(line[i] != '-'){
+                std::cout << "Error: Invalid date format" << std::endl;
+                break;
+            }
             i++;
             while(isnumber(line[i])){
                 month.push_back(line[i]);
@@ -44,10 +48,13 @@ void Bitcoin::convert(){
             }
             check = atol(month.c_str());
             if(check < 1 || check > 12){
-                throw std::runtime_error("Month range is invalid");
+                std::cout << "Month range is invalid" << std::endl;
+                break;
             }
-            if(line[i] != '-')
-                throw std::runtime_error("Invalid date format");
+            if(line[i] != '-'){
+                std::cout << "Invalid date format" << std::endl;
+                break;
+            }
             i++;
             while(isnumber(line[i])){
                 day.push_back(line[i]);
@@ -55,30 +62,41 @@ void Bitcoin::convert(){
             }
             check = atol(day.c_str());
             if(check < 1 || check > 31){
-                throw std::runtime_error("Day range is invalid");
+                std::cout << "Day range is invalid" << std::endl;
+                break;
             }
-            if(line[i++] != ' ')
-                throw std::runtime_error("Invalid input format");
-            if(line[i++] != '|')
-                throw std::runtime_error("Invalid input format");
-            if(line[i++] != ' ')
-                throw std::runtime_error("Invalid input format");
+            if(line[i++] != ' '){
+                std::cout << "Invalid input format" << std::endl;
+                break;
+            }
+            if(line[i++] != '|'){
+                std::cout << "Invalid input format" << std::endl;
+                break;
+            }
+            if(line[i++] != ' '){
+                std::cout << "Invalid input format" << std::endl;
+                break;
+            }
             while(isnumber(line[i]) || line[i] == '.'){
-                if(line[i] == '.' && dot)
-                    throw std::runtime_error("Invalid input format");
+                if(line[i] == '.' && dot){
+                    std::cout << "Invalid input format" << std::endl;
+                    break;
+                }
                 bitcoin.push_back(line[i++]);
                 if(line[i] == '.')
                     dot = 1;
             }
             value = std::stof(bitcoin);
-            // check = atol(bitcoin.c_str());
             if(value <= 0 || value > INT_MAX){
-                throw std::runtime_error("Bitcoin value invalid");
+                std::cout << "Bitcoin value invalid" << std::endl;
+                break;
             }
             while(isspace(line[i]))
                 i++;
-            if(line[i])
-                 throw std::runtime_error("Invalid input format");
+            if(line[i]){
+                std::cout << "Invalid input format" << std::endl;
+                break;
+            }
             
             date = year + "-" + month + "-" + day;
 
@@ -87,22 +105,16 @@ void Bitcoin::convert(){
                 std::cout << date << " => " << value << " = " << it->second * value << std::endl;
             } 
             else {
-                //find the lowest bound one here;
+                it = _map.lower_bound(date);
+                std::cout << date << " => " << value << " = " << it->second * value << std::endl;
             }
-
-
-
-
-
-
-
-
+            break;
+        }
             year.clear();
             month.clear();
             day.clear();
             bitcoin.clear();
-            first.clear();
-            second.clear();
+            date.clear();
 
             i = 0;
             dot = 0;
@@ -121,7 +133,10 @@ void Bitcoin::openFiles(const std::string& inputName) {
 Bitcoin::Bitcoin(){
 
 }
-Bitcoin::Bitcoin(const std::string input): _data(DATA), _input(input), _fileName(input){
+Bitcoin::Bitcoin(const std::string input):_fileName(input){
+
+    _data.open(DATA);
+    _input.open(input);
     if(!_data.is_open()){
        throw std::runtime_error("Unable to open file: " + std::string(DATA));
     }
@@ -135,18 +150,16 @@ Bitcoin::Bitcoin(const std::string input): _data(DATA), _input(input), _fileName
 
     std::getline(_data, line);
     while(std::getline(_data, line)){
-
         commaPos = line.find(',');
         if (commaPos != std::string::npos) {
             date = input.substr(0, commaPos);
-            value = std::stof(input.substr(commaPos + 1));
+            value = std::stof(line.substr(commaPos + 1));
             _map[date] = value;
         } 
-        else { 
+        else {
             throw std::runtime_error("Invalid data format");
         }
     }
-
 }
 Bitcoin::Bitcoin(const Bitcoin& other){
     openFiles(other.getFileName());
@@ -171,4 +184,8 @@ Bitcoin::~Bitcoin(){
 
 // const std::ifstream Bitcoin::getData(void) const{
 //     return _data;
+// }
+
+// const char* BitcoinExchange::customException::what() const throw() {
+// 	return "Error: could not open file.";
 // }

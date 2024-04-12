@@ -65,6 +65,8 @@
         "iomanip": "cpp",
         "stack": "cpp",
         "list": "cpp",
-        "*.tpp": "c"
+        "*.tpp": "c",
+        "map": "cpp",
+        "__tree": "cpp"
     }
 }
