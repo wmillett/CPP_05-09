@@ -5,6 +5,8 @@
 //TODO: change throw to print, get rid of extra 00000 before dates, fix converted value
 
 
+
+
 void Bitcoin::convert(){
     std::string line;
     std::string year;
@@ -101,11 +103,14 @@ void Bitcoin::convert(){
             date = year + "-" + month + "-" + day;
 
             std::map<std::string, float>::iterator it = _map.find(date);
-             if (it != _map.end()) {
+            if (it != _map.end()) {
                 std::cout << date << " => " << value << " = " << it->second * value << std::endl;
             } 
             else {
                 it = _map.lower_bound(date);
+                if(it != _map.begin())
+                    it--;
+                std::cout << "it->second: " << it->second << std::endl;
                 std::cout << date << " => " << value << " = " << it->second * value << std::endl;
             }
             break;
@@ -115,7 +120,6 @@ void Bitcoin::convert(){
             day.clear();
             bitcoin.clear();
             date.clear();
-
             i = 0;
             dot = 0;
     }
@@ -154,6 +158,8 @@ Bitcoin::Bitcoin(const std::string input):_fileName(input){
         if (commaPos != std::string::npos) {
             date = input.substr(0, commaPos);
             value = std::stof(line.substr(commaPos + 1));
+            std::cout << "date: " << date << std::endl;
+            std::cout << "here: " << value << std::endl;
             _map[date] = value;
         } 
         else {
