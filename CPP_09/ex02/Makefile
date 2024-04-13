@@ -8,7 +8,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Executable
-NAME = mutantstack
+NAME = PmergeMe
 
 # Source files
 SRC = $(wildcard *.cpp) 

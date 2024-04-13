@@ -50,8 +50,9 @@ revPol::revPol(const revPol& other){
 }
 
 revPol& revPol::operator=(const revPol& other){
-     if (this != &other) {
-    
+    if (this != &other) {
+        _stack = other._stack;
+        _line = other._line;
     }
     return *this;
 }
