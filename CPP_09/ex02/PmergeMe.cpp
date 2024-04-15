@@ -1,6 +1,6 @@
 #include "PmergeMe.hpp"
 
-const int K = 5;
+#define K 5
 
 
 //For list
