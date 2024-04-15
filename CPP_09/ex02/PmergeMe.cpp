@@ -20,8 +20,6 @@ void insertionSortList(std::list<int>& A, int p, int q) {
 }
 
 void combineList(std::list<int>& A, int p, int q, int r) {
-    // int n1 = q - p + 1;
-    // int n2 = r - q;
     std::list<int> LA(A.begin(), next(A.begin(), q + 1));
     std::list<int> RA(next(A.begin(), q + 1), next(A.begin(), r + 1));
     std::list<int>::iterator LIT = LA.begin();
@@ -45,7 +43,6 @@ void combineList(std::list<int>& A, int p, int q, int r) {
     }
 }
 
-
 void merge::sortList(std::list<int>& A, int p, int r) {
     if (r - p > K) {
         int q = (p + r) / 2;
@@ -56,9 +53,6 @@ void merge::sortList(std::list<int>& A, int p, int r) {
         insertionSortList(A, p, r);
     }
 }
-
-
-
 
 
 
