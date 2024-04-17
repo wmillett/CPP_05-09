@@ -20,6 +20,10 @@ void Bitcoin::convert(){
     size_t i = 0;
 
     std::getline(_input, line);
+    if(!line.size()){
+        std::cout << "Error: empty file" << std::endl;
+        return;
+    }
     if(line != "date | value"){
         std::cout << "Error: Invalid input format" << std::endl;
     }
